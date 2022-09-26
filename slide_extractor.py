@@ -98,7 +98,7 @@ def filter_diff(prev,current,const_threshold):
 
 
 def main(video_path,testname):
-    const_thresh = 520000 
+    const_thresh = 520000 #Threshold for the first stage of filtering
     now = time.time()
     cap = cv2.VideoCapture(video_path) 
     frames,thresholds=framing(2,cap,const_thresh)
@@ -106,14 +106,5 @@ def main(video_path,testname):
     saveend=time.time()
     return saveend-now,thresholds
 
-main("test_videos/test1.mp4","test6")
-# def convert_to_pdf(path,dest):
-#     final=[]
-#     images = os.listdir(path)
-#     for i in images[1:]:
-#         img = Image.open(f"{path}/{i}")
-#         imgc = img.convert('RGB')
-#         final.append(imgc)
-#     img0=Image.open(f"{path}/{images[0]}")
-#     imgc0=img0.convert("RGB")
-#     imgc0.save(dest,save_all=True,append_images=final)
+main("test_videos/test1.mp4","test7")
+

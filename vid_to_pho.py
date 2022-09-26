@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 #importing necessary libraries
 
 import cv2
@@ -13,10 +7,6 @@ from PIL import Image
 import imagehash
 import os
 import time
-
-
-# In[3]:
-
 
 def framing(ti,cap):
     # Collecting frame from video with a time interval ti
@@ -36,10 +26,6 @@ def framing(ti,cap):
         start+=ti
     return frames   #returning frames of the video as a numpy array with values 0-255
 
-
-# In[17]:
-
-
 def diff(path1,path2): 
     #Testing Function, Not used in main program
     f1 = cv2.imread(path1)
@@ -48,14 +34,10 @@ def diff(path1,path2):
     non_zero_count = np.count_nonzero(diff)
     print(non_zero_count)
 
-path1="test_photos/test6/photo0.png"
-#cv2.imshow(path1)
-path2="test_photos/test6/photo1.png"
-diff(path1,path2)
-
-
-# In[4]:
-
+# path1="test_photos/test6/photo0.png"
+# #cv2.imshow(path1)
+# path2="test_photos/test6/photo1.png"
+# diff(path1,path2)
 
 def similar(i,testname):
     #Checking wetheer the previous image and the current image are similar or not
@@ -65,9 +47,9 @@ def similar(i,testname):
     #print(int(hash0),int(hash1))
     cutoff = 5 
     if hash0 - hash1 < cutoff:
-      return True
+        return True
     else:
-      return False
+        return False
 
 def checkblack(i,testname):
     #Checking for any slides with majority values as black
@@ -81,10 +63,6 @@ def checkblack(i,testname):
         return True 
     return False
 
-
-# In[5]:
-
-
 def saveframes(frames,testname):
     #Saving the frames as image 
     if testname not in os.listdir("test_photos"): #Creating the test folder if its not present
@@ -97,11 +75,6 @@ def saveframes(frames,testname):
             os.remove(f"test_photos/{testname}/photo{idx}.png")
         else:
             idx+=1
-#saveframes(b,"test3")
-
-
-# In[6]:
-
 
 def filter_diff(frames,const_threshold):
     #First Stage of filtering out using opencv absdiff and count_nonzero method
@@ -121,10 +94,6 @@ def filter_diff(frames,const_threshold):
     thresholds_selected.append(0)
     return thresholds,frames_selected,thresholds_selected
 
-
-# In[7]:
-
-
 def main(video_path,testname):
     const_thresh = 520000 
     now = time.time()
@@ -139,28 +108,6 @@ def main(video_path,testname):
     saveend=time.time()
     return saveend-now
 
-
-# In[9]:
-
-
-main("test1.mp4","testfinal")
-
-
-# In[53]:
-
-
-
-
-
-# In[55]:
-
-
-
-
-
-# In[ ]:
-
-
 # def convert_to_pdf(path,dest):
 #     final=[]
 #     images = os.listdir(path)
@@ -171,4 +118,3 @@ main("test1.mp4","testfinal")
 #     img0=Image.open(f"{path}/{images[0]}")
 #     imgc0=img0.convert("RGB")
 #     imgc0.save(dest,save_all=True,append_images=final)
-

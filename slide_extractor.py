@@ -8,23 +8,35 @@ import imagehash
 import os
 import time
 
-def framing(ti,cap):
+def framing(ti,cap,const_threshold):
     # Collecting frame from video with a time interval ti
     frames=[]
+    thresholds=[]
     fps=cap.get(cv2.CAP_PROP_FPS) #FPS of the video
     fr = cap.get(cv2.CAP_PROP_FRAME_COUNT) #Total Frame count of the video
     total_duration = fr/fps #Total Duration
     #print(total_duration)
     start=0
+    prev_frame = None
     while start<total_duration-ti: #Iterating through the video till the final duration
         print(f"Frame {start} of {total_duration} completed")
         fid = fps*start   #frame at particular time
         cap.set(cv2.CAP_PROP_POS_FRAMES,fid) #Setting the video cursor at the particular time
         ret, frame = cap.read()
         #print(fid,ret)
-        frames.append(frame)
+        if start>total_duration-2*ti:
+            frames.append(frame)
+        if prev_frame is None:
+            prev_frame = frame
+            frames.append(frame)
+        else:
+            dif,thresh=filter_diff(prev_frame,frame,const_threshold)
+            if dif:
+                frames.append(frame)
+                prev_frame=frame
+                thresholds.append(thresh)
         start+=ti
-    return frames   #returning frames of the video as a numpy array with values 0-255
+    return frames,thresholds   #returning frames of the video as a numpy array with values 0-255
 
 def diff(path1,path2): 
     #Testing Function, Not used in main program
@@ -76,38 +88,25 @@ def saveframes(frames,testname):
         else:
             idx+=1
 
-def filter_diff(frames,const_threshold):
+def filter_diff(prev,current,const_threshold):
     #First Stage of filtering out using opencv absdiff and count_nonzero method
-    thresholds=[] #Storing Thresholds
-    frames_selected=[frames[0]]
-    thresholds_selected=[0]
-    prev = frames[0]
-    for current in frames:
-        difference=cv2.absdiff(prev,current)
-        value = np.count_nonzero(difference)
-        thresholds.append(value)
-        if value>const_threshold:
-            frames_selected.append(prev)
-            thresholds_selected.append(value)
-        prev=current
-    frames_selected.append(current)
-    thresholds_selected.append(0)
-    return thresholds,frames_selected,thresholds_selected
+    difference=cv2.absdiff(prev,current)
+    value = np.count_nonzero(difference)
+    if value>const_threshold:
+        return True,value
+    return False,value
+
 
 def main(video_path,testname):
     const_thresh = 520000 
     now = time.time()
-    cap = cv2.VideoCapture(video_path)
-    frames=framing(2,cap)
-    mid = time.time()
-    a,b,c=filter_diff(frames,const_thresh)
-    finish = time.time()
-    
-    savestart=time.time()
-    saveframes(b,testname)
+    cap = cv2.VideoCapture(video_path) 
+    frames,thresholds=framing(2,cap,const_thresh)
+    saveframes(frames,testname)
     saveend=time.time()
-    return saveend-now
+    return saveend-now,thresholds
 
+main("test_videos/test1.mp4","test6")
 # def convert_to_pdf(path,dest):
 #     final=[]
 #     images = os.listdir(path)

@@ -5,7 +5,7 @@ from typing import Text
 from PIL import Image, ImageTk
 import glob
 
-height = 600 
+height = 670
 width = 1000 
 images = [Image.open(file) for file in glob.glob('images/*.png')]
 
@@ -24,7 +24,7 @@ class App(Tk.Tk):
         geometry = str(width) + 'x' + str(height)
         self.geometry(geometry)
         self.title(title)
-        self.resizable(0,0)
+        # self.resizable(0,0)
         self.nok=Tk.IntVar()
         self.np=Tk.StringVar()
 
@@ -166,7 +166,7 @@ def moveImageLeft(event):
 def main():
     global car
     global app
-    app = App('Carousel')
+    app = App('SPD')
     car = Carousel(app)
     app.mainloop()
 

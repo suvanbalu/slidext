@@ -18,13 +18,13 @@ def framing(ti,cap,const_threshold):
     #print(total_duration)
     start=0
     prev_frame = None
-    while start<total_duration-ti: #Iterating through the video till the final duration
+    while start<=total_duration-ti: #Iterating through the video till the final duration
         print(f"Frame {start} of {total_duration} completed")
         fid = fps*start   #frame at particular time
         cap.set(cv2.CAP_PROP_POS_FRAMES,fid) #Setting the video cursor at the particular time
         ret, frame = cap.read()
         #print(fid,ret)
-        if start>total_duration-2*ti:
+        if start>total_duration-(2*ti):
             frames.append(frame)
         if prev_frame is None:
             prev_frame = frame
@@ -81,12 +81,16 @@ def saveframes(frames,testname):
         os.mkdir(f"test_photos/{testname}")
     cv2.imwrite(f"test_photos/{testname}/photo{0}.png",frames[0])
     idx=1
-    for frame in frames[1:]:
+    for frame in frames[1:-1]:
         cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frame) 
         if similar(idx,testname) or checkblack(idx,testname):
             os.remove(f"test_photos/{testname}/photo{idx}.png")
         else:
             idx+=1
+    cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frames[-1])te
+    if similar(idx,testname) or checkblack(idx,testname):
+        os.remove(f"test_photos/{testname}/photo{idx-1}.png")
+    
 
 def filter_diff(prev,current,const_threshold):
     #First Stage of filtering out using opencv absdiff and count_nonzero method
@@ -106,5 +110,5 @@ def main(video_path,testname):
     saveend=time.time()
     return saveend-now,thresholds
 
-main("test_videos/test1.mp4","test7")
+print(main("test_videos/test2.mp4","test7")[0])
 

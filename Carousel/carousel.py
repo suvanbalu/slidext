@@ -1,6 +1,7 @@
 from email.mime import image
 import tkinter as Tk
 from tkinter import Canvas, ttk
+from typing import Text
 from PIL import Image, ImageTk
 import glob
 
@@ -9,6 +10,8 @@ width = 1000
 images = [Image.open(file) for file in glob.glob('images/*.png')]
 
 d=[]
+def printer():
+    print(list(set(d)))
 
 
 def show(event):
@@ -23,8 +26,14 @@ class App(Tk.Tk):
         self.title(title)
         self.resizable(0,0)
         self.nok=Tk.IntVar()
+        self.np=Tk.StringVar()
+
         self.check= Tk.Checkbutton(variable=self.nok,onvalue = 1, offvalue = 0)
         self.check.pack()
+        self.np.set("1/"+str(len(images)))
+        self.page =Tk.Label(textvariable=self.np).pack() 
+        self.submit=Tk.Button(text="Submit",command=printer)
+        self.submit.pack()
 
         self.bind('<Left>',moveImageLeft)
         self.bind('<Right>',moveImageRight)
@@ -70,6 +79,8 @@ class Carousel(Tk.Canvas):
 
 
     def moveImageRight(self):
+        global app
+
         if self.current < len(images):
             for i in range(25):
                 self.after(0,self.move(self.Photo,-40,0))
@@ -78,11 +89,13 @@ class Carousel(Tk.Canvas):
             self.current += 1
         if self.current>=len(images):
             self.current=len(images)
+        app.np.set(str(self.current)+"/"+str(len(images)))
         print(d)
 
        
 
     def moveImageLeft(self):
+        global app
         if self.current > 0:
             for i in range(25):
                 self.after(0,self.move(self.Photo,40,0))
@@ -91,6 +104,9 @@ class Carousel(Tk.Canvas):
             self.current -= 1
         if self.current<=0:
             self.current=0
+        
+        app.np.set(str(self.current)+"/"+str(len(images)))
+
         print(d)
 
         
@@ -102,11 +118,16 @@ def moveImageRight(event):
     global car
     global app
 
+
+
     if app.nok.get()==1:
         d.append(car.current)
+    if app.nok.get()==0:
+        if car.current in d:
+            d.remove(car.current)
+
     
     if car.current == len(images):
-
         print(list(set(d)))
         pass
     else:
@@ -116,15 +137,19 @@ def moveImageRight(event):
         app.nok.set(0)
     else:
         app.nok.set(1)
+    
 
 
 def moveImageLeft(event):
     global car
     global app
 
-
     if app.nok.get()==1:
         d.append(car.current)
+    if app.nok.get()==0:
+        if car.current in d:
+            d.remove(car.current)
+        
 
     if car.current == 1:
         pass    

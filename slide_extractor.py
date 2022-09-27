@@ -87,7 +87,7 @@ def saveframes(frames,testname):
             os.remove(f"test_photos/{testname}/photo{idx}.png")
         else:
             idx+=1
-    cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frames[-1])te
+    cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frames[-1])
     if similar(idx,testname) or checkblack(idx,testname):
         os.remove(f"test_photos/{testname}/photo{idx-1}.png")
     

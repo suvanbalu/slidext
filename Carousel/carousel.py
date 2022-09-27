@@ -24,7 +24,7 @@ class App(Tk.Tk):
         geometry = str(width) + 'x' + str(height)
         self.geometry(geometry)
         self.title(title)
-        # self.resizable(0,0)
+        self.resizable(0,0)
         self.nok=Tk.IntVar()
         self.np=Tk.StringVar()
 

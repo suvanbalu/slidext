@@ -5,7 +5,7 @@ from typing import Text
 from PIL import Image, ImageTk
 import glob
 
-height = 670
+height = 725
 width = 1000 
 images = [Image.open(file) for file in glob.glob('images/*.png')]
 
@@ -27,23 +27,38 @@ class App(Tk.Tk):
         self.resizable(0,0)
         self.nok=Tk.IntVar()
         self.np=Tk.StringVar()
+        self.config(bg='#282C34')
 
-        self.check= Tk.Checkbutton(variable=self.nok,onvalue = 1, offvalue = 0)
-        self.check.pack()
-        self.np.set("1/"+str(len(images)))
-        self.page =Tk.Label(textvariable=self.np).pack() 
-        self.submit=Tk.Button(text="Submit",command=printer)
-        self.submit.pack()
+        
+        
 
         self.bind('<Left>',moveImageLeft)
         self.bind('<Right>',moveImageRight)
+        self.check= Tk.Checkbutton(variable=self.nok,onvalue = 1, offvalue = 0)
+        self.np.set("1/"+str(len(images)))
+        self.page =Tk.Label(textvariable=self.np)
+        self.submit=Tk.Button(text="Submit",command=printer)
+        self.page1 =Tk.Label(text=" ")
+
+        self.page.config(font=("Ubuntu",17),bg="#282C34",fg="White",highlightthickness=10)
+        self.check.config(font=("Ubuntu",20),bg="#282C34",fg="White")
+        self.submit.config(font=("Ubuntu",15),bg="#282C34",fg="Black")
+        self.submit.config(height=2,width=10)
+        self.page1.config(font=("Ubuntu",1),bg="#282C34",fg="White",highlightthickness=3)
+        self.page1.pack(side=Tk.BOTTOM)
+
+        self.submit.pack(side=Tk.BOTTOM)
+        self.check.pack(side=Tk.BOTTOM)
+
+       
+        self.page.pack(side=Tk.TOP)
 
 
 class Carousel(Tk.Canvas):
     def __init__(self,master):
         super().__init__()
-        self.config(width=width,height=height)
-        self.pack()
+        self.config(width=width,height=height,borderwidth=0,highlightthickness=0,bg='#282C34')
+        
         self.stitchImages()
         self.showPhoto()
         self.loadIndicator()
@@ -62,7 +77,7 @@ class Carousel(Tk.Canvas):
         for im in images:
           self.stitched.paste(im, (x_offset,0))
           x_offset += im.size[0]
-        self.stitched = self.stitched.resize((len(images)*1000,600))
+        self.stitched = self.stitched.resize((len(images)*1000,590))
         self.length = len(images)
 
     def showPhoto(self):
@@ -168,6 +183,8 @@ def main():
     global app
     app = App('SPD')
     car = Carousel(app)
+    
+    car.pack()
     app.mainloop()
 
 main()

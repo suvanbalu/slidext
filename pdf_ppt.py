@@ -1,7 +1,6 @@
 from fpdf import FPDF
 import os
 from PIL import Image
-# Copyright (c) 2020 Kevin McGuinness <kevin.mcguinness@gmail.com>
 import fitz
 import io
 
@@ -72,9 +71,24 @@ def convert_to_ppt(input_path, output_file, resolution=300, start_page=0, page_c
     doc.close()
     os.remove(os.getcwd()+"\\temp.pdf")
 
-convert_to_ppt("test_photos/test6","test.pptx")
+# convert_to_ppt("test_photos/test6","test.pptx")
+
+def carousel_to_pdf(pages,path,dest,name):
+    final=[]
+    images = sorted(os.listdir(path))
+    ind=1
+    for i in images[1:]:
+        if ind+1 in pages[1:]:
+            img = Image.open(f"{path}/{i}")
+            imgc = img.convert('RGB')
+            final.append(imgc)
+        ind+=1
+    img0=Image.open(f"{path}/{images[pages[0]]}")
+    imgc0=img0.convert("RGB")
+    imgc0.save(f"{dest}/{name}.pdf",save_all=True,append_images=final)
 
 
+# carousel_to_pdf([1,2,3,4,5],"test_photos/test6",os.getcwd(),"test")
 # input_path="test_photos/test6"
 # convert_to_pdf(input_path,os.getcwd(),"temp")
 

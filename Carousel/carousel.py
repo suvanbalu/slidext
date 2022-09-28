@@ -31,19 +31,19 @@ class App(Tk.Tk):
 
         
         
-
+        self.photo = Tk.PhotoImage(file = r"button2.png")
         self.bind('<Left>',moveImageLeft)
         self.bind('<Right>',moveImageRight)
         self.check= Tk.Checkbutton(variable=self.nok,onvalue = 1, offvalue = 0)
-        self.np.set("1/"+str(len(images)))
+        self.np.set("1 / "+str(len(images)))
         self.page =Tk.Label(textvariable=self.np)
-        self.submit=Tk.Button(text="Submit",command=printer)
+        self.submit=Tk.Button(text="Submit",command=printer,image=self.photo)
         self.page1 =Tk.Label(text=" ")
 
-        self.page.config(font=("Ubuntu",17),bg="#282C34",fg="White",highlightthickness=10)
+        self.page.config(font=("Ubuntu",17),bg="#262930",fg="#D9D9D9",borderwidth=10,highlightthickness=10)
         self.check.config(font=("Ubuntu",20),bg="#282C34",fg="White")
-        self.submit.config(font=("Ubuntu",15),bg="#282C34",fg="Black")
-        self.submit.config(height=2,width=10)
+        self.submit.config(font=("Ubuntu",15),bg="#282C34",fg="Black",borderwidth=0,highlightthickness=0)
+        self.submit.config(height=47,width=164)
         self.page1.config(font=("Ubuntu",1),bg="#282C34",fg="White",highlightthickness=3)
         self.page1.pack(side=Tk.BOTTOM)
 
@@ -104,7 +104,7 @@ class Carousel(Tk.Canvas):
             self.current += 1
         if self.current>=len(images):
             self.current=len(images)
-        app.np.set(str(self.current)+"/"+str(len(images)))
+        app.np.set(str(self.current)+" / "+str(len(images)))
         print(d)
 
        

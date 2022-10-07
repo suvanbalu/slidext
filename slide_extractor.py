@@ -10,7 +10,7 @@ import time
 
 def framing(ti,cap,const_threshold):
     # Collecting frame from video with a time interval ti
-    frames=[]
+    frames=[]  #to save diiferent frames
     thresholds=[]
     fps=cap.get(cv2.CAP_PROP_FPS) #FPS of the video
     fr = cap.get(cv2.CAP_PROP_FRAME_COUNT) #Total Frame count of the video
@@ -22,17 +22,17 @@ def framing(ti,cap,const_threshold):
         print(f"Frame {start} of {total_duration} completed")
         fid = fps*start   #frame at particular time
         cap.set(cv2.CAP_PROP_POS_FRAMES,fid) #Setting the video cursor at the particular time
-        ret, frame = cap.read()
+        ret, frame = cap.read()   #Reading the frame
         #print(fid,ret)
-        if start>total_duration-(2*ti):
+        if start>total_duration-(2*ti):   #For the last 2 seconds of the video
             frames.append(frame)
-        if prev_frame is None:
+        if prev_frame is None:        #For the first frame
             prev_frame = frame
             frames.append(frame)
         else:
-            dif,thresh=filter_diff(prev_frame,frame,const_threshold)
+            dif,thresh=filter_diff(prev_frame,frame,const_threshold)  #Filtering out the frames
             if dif:
-                frames.append(frame)
+                frames.append(prev_frame)
                 prev_frame=frame
                 thresholds.append(thresh)
         start+=ti
@@ -51,7 +51,7 @@ def diff(path1,path2):
 # path2="test_photos/test6/photo1.png"
 # diff(path1,path2)
 
-def similar(i,testname):
+def similar(i,testname):    #second level filter
     #Checking wetheer the previous image and the current image are similar or not
     
     hash0 = imagehash.average_hash(Image.open(f'test_photos/{testname}/photo{i-1}.png')) 
@@ -63,7 +63,7 @@ def similar(i,testname):
     else:
         return False
 
-def checkblack(i,testname):
+def checkblack(i,testname):   #Checking whether the image is black or not
     #Checking for any slides with majority values as black
     threshold=1033203
     img = cv2.imread(f'test_photos/{testname}/photo{i}.png',0) #read img as b/w as an numpy array
@@ -92,7 +92,7 @@ def saveframes(frames,testname):
         os.remove(f"test_photos/{testname}/photo{idx-1}.png")
     
 
-def filter_diff(prev,current,const_threshold):
+def filter_diff(prev,current,const_threshold):  #1st level filter
     #First Stage of filtering out using opencv absdiff and count_nonzero method
     difference=cv2.absdiff(prev,current)
     value = np.count_nonzero(difference)
@@ -110,5 +110,5 @@ def main(video_path,testname):
     saveend=time.time()
     return saveend-now,thresholds
 
-print(main("test_videos/test2.mp4","test7")[0])
+print(main("test_videos/test1.mp4","test7")[0])
 

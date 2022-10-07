@@ -5,7 +5,7 @@ from typing import Text
 from PIL import Image, ImageTk
 import glob
 
-height = 725
+height = 750
 width = 1000 
 images = [Image.open(file) for file in glob.glob('images/*.png')]
 

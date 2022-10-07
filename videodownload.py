@@ -3,8 +3,10 @@ import os
 import re
 import urllib
 
+
+
 def download_yvideo(dest,links):
-  for i in range(len(links)):  
+  for i in range(len(links)):
       try:  
           yt = YouTube(links[i])  
       except:         
@@ -18,9 +20,6 @@ def download_yvideo(dest,links):
           print(f"There is some Error for video no. {i+1}!")  
       print(f'Video {i+1} Download Successfully!')  
 
-# download_video(os.getcwd(),["https://www.youtube.com/watch?v=xWOoBJUqlbI", 
-#     "https://www.youtube.com/watch?v=xWOoBJUqlbI"
-#     ])
 def download_ovideo(dest,links):
   for i in range(len(links)):
     try:

@@ -44,7 +44,7 @@ class App(Tk.Tk):
         self.check.config(font=("Ubuntu",20),bg="#282C34",fg="White")
         self.submit.config(font=("Ubuntu",15),bg="#282C34",fg="Black",borderwidth=0,highlightthickness=0)
         self.submit.config(height=47,width=164)
-        self.page1.config(font=("Ubuntu",1),bg="#282C34",fg="White",highlightthickness=3)
+        self.page1.config(font=("Ubuntu",1),bg="#282C34",fg="White",highlightthickness=0)
         self.page1.pack(side=Tk.BOTTOM)
 
         self.submit.pack(side=Tk.BOTTOM)

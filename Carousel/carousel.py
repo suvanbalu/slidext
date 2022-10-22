@@ -187,4 +187,4 @@ def main():
     car.pack()
     app.mainloop()
 
-main()
+# main()

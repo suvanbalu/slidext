@@ -62,5 +62,5 @@ def videodownload(dest,links=None,file=False,filename=None):
       download_ovideo(dest,olinks)
     except:
       print("Other links are not supported yet!")
-
-videodownload(os.getcwd(),filename="test/links1.txt",file=True)
+    
+#videodownload(dest,links=)

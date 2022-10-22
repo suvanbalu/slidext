@@ -5,7 +5,6 @@ import numpy as np
 import os
 from PIL import Image
 import imagehash
-import os
 import time
 
 def framing(ti,cap,const_threshold):
@@ -52,7 +51,7 @@ def diff(path1,path2):
 # diff(path1,path2)
 
 def similar(i,testname):    #second level filter
-    #Checking wetheer the previous image and the current image are similar or not
+    #Checking whether the previous image and the current image are similar or not
     
     hash0 = imagehash.average_hash(Image.open(f'test_photos/{testname}/photo{i-1}.png')) 
     hash1 = imagehash.average_hash(Image.open(f'test_photos/{testname}/photo{i}.png')) 
@@ -101,14 +100,16 @@ def filter_diff(prev,current,const_threshold):  #1st level filter
     return False,value
 
 
-def main(video_path,testname):
-    const_thresh = 520000 #Threshold for the first stage of filtering
+def main(video_path,testname,const_thresh,ti): 
+    # const_thresh = 520000 #Threshold for the first stage of filtering
+    ti=float(ti)
     now = time.time()
     cap = cv2.VideoCapture(video_path) 
-    frames,thresholds=framing(2,cap,const_thresh)
+    frames,thresholds=framing(ti,cap,const_thresh)
     saveframes(frames,testname)
     saveend=time.time()
     return saveend-now,thresholds
 
-print(main("test_videos/test1.mp4","test7")[0])
+# print(main("test_videos/test1.mp4","test7")[0])
 
+#testname -> destination path

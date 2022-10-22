@@ -76,8 +76,8 @@ def checkblack(i,testname):   #Checking whether the image is black or not
 
 def saveframes(frames,testname):
     #Saving the frames as image 
-    # if testname not in os.listdir("test_photos"): #Creating the test folder if its not present
-    #     os.mkdir(f"{testname}")
+    if not os.path.exists(testname): #Creating the test folder if its not present
+        os.mkdir(f"{testname}")
     cv2.imwrite(f"{testname}/photo{0}.png",frames[0])
     idx=1
     for frame in frames[1:-1]:

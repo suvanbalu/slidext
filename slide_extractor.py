@@ -103,6 +103,7 @@ def filter_diff(prev,current,const_threshold):  #1st level filter
 def main(video_path,testname,const_thresh,ti): 
     # const_thresh = 520000 #Threshold for the first stage of filtering
     ti=float(ti)
+    print(video_path)
     now = time.time()
     cap = cv2.VideoCapture(video_path) 
     frames,thresholds=framing(ti,cap,const_thresh)

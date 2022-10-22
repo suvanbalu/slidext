@@ -9,16 +9,21 @@ def download_yvideo(dest,links):
   for i in range(len(links)):
       try:  
           yt = YouTube(links[i])  
+          title=yt.title
+          title=title.split("|")
+          title=title[0]
+          print(title)
       except:         
           #to handle exception  
           print("Connection Error, Check your connectivity")  
       d_video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
       try:  
           # downloading the video  
-          d_video.download(dest)  
+          d_video.download(dest,filename=title+".mp4")  
       except:  
           print(f"There is some Error for video no. {i+1}!")  
-      print(f'Video {i+1} Download Successfully!')  
+      print(f'Video {i+1} Download Successfully!') 
+  return title
 
 def download_ovideo(dest,links):
   for i in range(len(links)):
@@ -56,11 +61,11 @@ def videodownload(dest,links=None,file=False,filename=None):
     print("No links found!")
 
   if len(ylinks)>0:
-    download_yvideo(dest,ylinks)
+    title=download_yvideo(dest,ylinks)
   if len(olinks)>0:
     try:
       download_ovideo(dest,olinks)
     except:
       print("Other links are not supported yet!")
+  return title
     
-#videodownload(dest,links=)

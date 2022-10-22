@@ -7,7 +7,7 @@ import glob
 
 height = 750
 width = 1000 
-images = [Image.open(file) for file in glob.glob('images/*.png')]
+images = [Image.open(file) for file in glob.glob('Carousel/images/*.png')]
 
 d=[]
 def printer():
@@ -31,7 +31,7 @@ class App(Tk.Tk):
 
         
         
-        self.photo = Tk.PhotoImage(file = r"button2.png")
+        self.photo = Tk.PhotoImage(file = r"Carousel/button2.png")
         self.bind('<Left>',moveImageLeft)
         self.bind('<Right>',moveImageRight)
         self.check= Tk.Checkbutton(variable=self.nok,onvalue = 1, offvalue = 0)

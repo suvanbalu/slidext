@@ -45,16 +45,16 @@ def diff(path1,path2):
     non_zero_count = np.count_nonzero(diff)
     print(non_zero_count)
 
-# path1="test_photos/test6/photo0.png"
+# path1="test6/photo0.png"
 # #cv2.imshow(path1)
-# path2="test_photos/test6/photo1.png"
+# path2="test6/photo1.png"
 # diff(path1,path2)
 
 def similar(i,testname):    #second level filter
     #Checking whether the previous image and the current image are similar or not
     
-    hash0 = imagehash.average_hash(Image.open(f'test_photos/{testname}/photo{i-1}.png')) 
-    hash1 = imagehash.average_hash(Image.open(f'test_photos/{testname}/photo{i}.png')) 
+    hash0 = imagehash.average_hash(Image.open(f'{testname}/photo{i-1}.png')) 
+    hash1 = imagehash.average_hash(Image.open(f'{testname}/photo{i}.png')) 
     #print(int(hash0),int(hash1))
     cutoff = 5 
     if hash0 - hash1 < cutoff:
@@ -65,7 +65,7 @@ def similar(i,testname):    #second level filter
 def checkblack(i,testname):   #Checking whether the image is black or not
     #Checking for any slides with majority values as black
     threshold=1033203
-    img = cv2.imread(f'test_photos/{testname}/photo{i}.png',0) #read img as b/w as an numpy array
+    img = cv2.imread(f'{testname}/photo{i}.png',0) #read img as b/w as an numpy array
     unique, counts = np.unique(img, return_counts=True)
     mapColorCounts = dict(zip(unique, counts))
     if 0 not in mapColorCounts:
@@ -76,19 +76,19 @@ def checkblack(i,testname):   #Checking whether the image is black or not
 
 def saveframes(frames,testname):
     #Saving the frames as image 
-    if testname not in os.listdir("test_photos"): #Creating the test folder if its not present
-        os.mkdir(f"test_photos/{testname}")
-    cv2.imwrite(f"test_photos/{testname}/photo{0}.png",frames[0])
+    # if testname not in os.listdir("test_photos"): #Creating the test folder if its not present
+    #     os.mkdir(f"{testname}")
+    cv2.imwrite(f"{testname}/photo{0}.png",frames[0])
     idx=1
     for frame in frames[1:-1]:
-        cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frame) 
+        cv2.imwrite(f"{testname}/photo{idx}.png",frame) 
         if similar(idx,testname) or checkblack(idx,testname):
-            os.remove(f"test_photos/{testname}/photo{idx}.png")
+            os.remove(f"{testname}/photo{idx}.png")
         else:
             idx+=1
-    cv2.imwrite(f"test_photos/{testname}/photo{idx}.png",frames[-1])
+    cv2.imwrite(f"{testname}/photo{idx}.png",frames[-1])
     if similar(idx,testname) or checkblack(idx,testname):
-        os.remove(f"test_photos/{testname}/photo{idx-1}.png")
+        os.remove(f"{testname}/photo{idx-1}.png")
     
 
 def filter_diff(prev,current,const_threshold):  #1st level filter

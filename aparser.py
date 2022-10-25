@@ -34,12 +34,25 @@ se_parser.add_argument('-nc',default=1,help="No Carousel")
 se_parser.add_argument('-pt',default=0,help="print thresholds") #work to be done
 
 
-# conv_parser=subparser.add_parser('pc',help='PDF/PPT Converter')
-# conv_parser.add_argument('-l','-path',required=True,help="Path of File")
-# conv_parser.add_argument('-s','-dest',default=os.getcwd(),help="Destination of New File")
+pcpdf_parser=subparser.add_parser('pdf',help='PDF Converter')
+pcpdf_parser.add_argument('-o','-open',required=True,help="Path of Video")
+pcpdf_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
+# 
+pcppt_parser=subparser.add_parser('ppt',help='PPT Converter')
+pcppt_parser.add_argument('-o','-open',required=True,help="Path of Video")
+pcppt_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
+pcppt_parser.add_argument('-res',default=300,help="Set threshold")
+pcppt_parser.add_argument('-start',default=0,help="Starting page of PPT")
+pcppt_parser.add_argument('-count',default=None,help="Page Count")
+pcppt_parser.add_argument('-quiet',default=True,help="!!!!")
+#
+pc_parser=subparser.add_parser('car',help='Carousel Converter')
+pc_parser.add_argument('-o','-open',required=True,help="Path of Video")
+pc_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
+pc_parser.add_argument('-n','-name',help="Name of file")
+pc_parser.add_argument('-p','-pages',help="!!!!")
 
 args=parser.parse_args()
-
 
 def download():
     if args.l:
@@ -59,9 +72,13 @@ elif args.command=="se":
     slide_extractor.main(o,args.s,args.t,args.ti)
     if args.nc==1:
         carousel.main()
+elif args.command=="pdf":
+    pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
+elif args.command=="ppt":
+    pdf_ppt.convert_to_ppt(args.o, args.s, args.res, args.start, args.count, args.quiet)
+elif args.command=="car":
+    pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
 
-# elif args.command=="pc":
 
 # test/links1.txt
-
 # C:\Users\nvnas\OneDrive\Desktop\slidext\2 Second Video.mp4

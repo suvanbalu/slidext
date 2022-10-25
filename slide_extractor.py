@@ -107,6 +107,7 @@ def main(video_path,testname,const_thresh,ti):
     now = time.time()
     cap = cv2.VideoCapture(video_path) 
     frames,thresholds=framing(ti,cap,const_thresh)
+    # testname=f"{testname}\Carousel\images"
     saveframes(frames,testname)
     saveend=time.time()
     return saveend-now,thresholds

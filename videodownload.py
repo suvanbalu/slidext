@@ -12,7 +12,6 @@ def download_yvideo(dest,links):
           title=yt.title
           title=title.split("|")
           title=title[0]
-          print(title)
       except:         
           #to handle exception  
           print("Connection Error, Check your connectivity")  

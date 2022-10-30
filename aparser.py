@@ -67,11 +67,10 @@ elif args.command=="se":
     if args.o:
         o=args.o
     else:
-        o=None
         title=download()
         for i in title:
-            o.append(f'{args.s}\{i}.mp4')
-            slide_extractor.main(o,args.s,i,args.ti)
+            o=f'{args.s}\{i}.mp4'
+            slide_extractor.main(o,args.s,args.ti)
     if args.nc==1:
         carousel.main(args.s)
 elif args.command=="pdf":

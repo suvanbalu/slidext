@@ -95,12 +95,12 @@ def filter_diff(prev,current,const_threshold):  #1st level filter
     #First Stage of filtering out using opencv absdiff and count_nonzero method
     difference=cv2.absdiff(prev,current)
     value = np.count_nonzero(difference)
-    if value>const_threshold:
+    if value>int(const_threshold):
         return True,value
     return False,value
 
 
-def main(video_path,testname,const_thresh,ti): 
+def main(video_path,testname,ti,const_thresh=52000): 
     # const_thresh = 520000 #Threshold for the first stage of filtering
     ti=float(ti)
     print(video_path)

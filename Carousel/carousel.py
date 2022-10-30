@@ -73,7 +73,7 @@ class Carousel(Tk.Canvas):
         # Stitch Image
        
         widths, heights = zip(*(i.size for i in images))
-        print(len(images))
+        # print(len(images))
         total_width = sum(widths)
         max_height = max(heights)
         self.stitched = Image.new('RGB', (total_width, max_height))
@@ -109,7 +109,7 @@ class Carousel(Tk.Canvas):
         if self.current>=len(images):
             self.current=len(images)
         app.np.set(str(self.current)+" / "+str(len(images)))
-        print(d)
+        # print(d)
 
        
 
@@ -126,7 +126,7 @@ class Carousel(Tk.Canvas):
         
         app.np.set(str(self.current)+"/"+str(len(images)))
 
-        print(d)
+        # print(d)
 
         
 
@@ -185,7 +185,7 @@ def moveImageLeft(event):
 def main(path):
     global car
     global app
-    print(open_images(path))
+    (open_images(path))
     app = App('SPD')
     car = Carousel(app)
     car.pack()

@@ -58,9 +58,9 @@ def videodownload(dest,links=None,file=False,filename=None):
     ylinks,olinks=checkyoutube(links)
   except:
     print("No links found!")
-
+  title=[]
   if len(ylinks)>0:
-    title=download_yvideo(dest,ylinks)
+    title.append(download_yvideo(dest,ylinks))
   if len(olinks)>0:
     try:
       download_ovideo(dest,olinks)

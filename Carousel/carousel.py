@@ -1,18 +1,22 @@
 from email.mime import image
 import tkinter as Tk
-from tkinter import Canvas, ttk
+from tkinter import Canvas, image_names, ttk
 from typing import Text
 from PIL import Image, ImageTk
 import glob
 
 height = 750
 width = 1000 
-images = [Image.open(file) for file in glob.glob('Carousel/images/*.png')]
+images=[]
+
+def open_images(path):
+    global images
+    images = [Image.open(file) for file in glob.glob(path+'/*.png')]
+    return images
 
 d=[]
 def printer():
     print(list(set(d)))
-
 
 def show(event):
     print(event.x,event.y)
@@ -178,13 +182,14 @@ def moveImageLeft(event):
    
 
 
-def main():
+def main(path):
     global car
     global app
+    print(open_images(path))
     app = App('SPD')
     car = Carousel(app)
-    
     car.pack()
     app.mainloop()
 
-# main()
+# path=input()
+# main(path)

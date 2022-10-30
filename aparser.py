@@ -1,5 +1,4 @@
 import argparse
-from turtle import title
 import videodownload
 import slide_extractor
 import Carousel.carousel as carousel
@@ -62,16 +61,19 @@ def download():
     return title
 
 if args.command=="vd":
-    download()
+    title=download()
+    print(title)
 elif args.command=="se":
     if args.o:
         o=args.o
     else:
+        o=None
         title=download()
-        o=f'{args.s}\{title}.mp4'
-    slide_extractor.main(o,args.s,args.t,args.ti)
+        for i in title:
+            o.append(f'{args.s}\{i}.mp4')
+            slide_extractor.main(o,args.s,i,args.ti)
     if args.nc==1:
-        carousel.main()
+        carousel.main(args.s)
 elif args.command=="pdf":
     pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
 elif args.command=="ppt":

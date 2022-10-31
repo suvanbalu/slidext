@@ -190,6 +190,7 @@ def main(path):
     car = Carousel(app)
     car.pack()
     app.mainloop()
+    return d
 
 # path=input()
 # main(path)

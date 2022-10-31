@@ -100,7 +100,7 @@ def filter_diff(prev,current,const_threshold):  #1st level filter
     return False,value
 
 
-def main(video_path,testname,ti,const_thresh=52000): 
+def main(video_path,testname,ti=2,const_thresh=52000): 
     # const_thresh = 520000 #Threshold for the first stage of filtering
     ti=float(ti)
     print(video_path)

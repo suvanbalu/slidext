@@ -2,7 +2,8 @@ from pytube import YouTube
 import os
 import re
 import urllib
-
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def download_yvideo(dest,links):
@@ -67,4 +68,8 @@ def videodownload(dest,links=None,file=False,filename=None):
     except:
       print("Other links are not supported yet!")
   return title
-    
+
+# link1=[]
+# link2=input()
+# link1.append(link2)
+# videodownload(dest=os.getcwd(),links=link1)

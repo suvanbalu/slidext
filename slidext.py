@@ -14,7 +14,7 @@ vd_parser=subparser.add_parser('vd',help='Video Downloader')
 #
 group1 = vd_parser.add_mutually_exclusive_group(required=True)
 group1.add_argument('-f','-file',help="File of Links")
-group1.add_argument('-l','-link',action='append',help="Link(s) to Video")
+group1.add_argument('-l','-link',type=str,action='append',help="Link(s) to Video")
 #
 vd_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
 
@@ -34,26 +34,45 @@ se_parser.add_argument('-pt',default=0,help="print thresholds") #work to be done
 
 
 pcpdf_parser=subparser.add_parser('pdf',help='PDF Converter')
-pcpdf_parser.add_argument('-o','-open',required=True,help="Path of Video")
-pcpdf_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
 # 
+group3 = pcpdf_parser.add_mutually_exclusive_group(required=True)
+group3.add_argument('-o','-open',help="Path of Video")
+group3.add_argument('-f','-file',help="File of Links")
+group3.add_argument('-l','-link',action='append',help="Link(s) to Video")
+# 
+pcpdf_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
+pcpdf_parser.add_argument('-n','-name',help="Name of file")
+
+
 pcppt_parser=subparser.add_parser('ppt',help='PPT Converter')
-pcppt_parser.add_argument('-o','-open',required=True,help="Path of Video")
+# 
+group4 = pcppt_parser.add_mutually_exclusive_group(required=True)
+group4.add_argument('-o','-open',help="Path of Video")
+group4.add_argument('-f','-file',help="File of Links")
+group4.add_argument('-l','-link',action='append',help="Link(s) to Video")
+#
 pcppt_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
 pcppt_parser.add_argument('-res',default=300,help="Set threshold")
 pcppt_parser.add_argument('-start',default=0,help="Starting page of PPT")
 pcppt_parser.add_argument('-count',default=None,help="Page Count")
 pcppt_parser.add_argument('-quiet',default=True,help="!!!!")
-#
+
+
 pc_parser=subparser.add_parser('car',help='Carousel Converter')
-pc_parser.add_argument('-o','-open',required=True,help="Path of Video")
+# 
+group5 = pc_parser.add_mutually_exclusive_group(required=True)
+group5.add_argument('-o','-open',help="Path of Video")
+group5.add_argument('-f','-file',help="File of Links")
+group5.add_argument('-l','-link',action='append',help="Link(s) to Video")
+# 
 pc_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
 pc_parser.add_argument('-n','-name',help="Name of file")
-pc_parser.add_argument('-p','-pages',help="!!!!")
 
 args=parser.parse_args()
+print(args.l)
 
 def download():
+    # print(args.l)
     if args.l:
         title=videodownload.videodownload(args.s,args.l)
     else:
@@ -66,6 +85,7 @@ if args.command=="vd":
 elif args.command=="se":
     if args.o:
         o=args.o
+        slide_extractor.main(o,args.s,args.ti)
     else:
         title=download()
         for i in title:
@@ -74,11 +94,37 @@ elif args.command=="se":
     if args.nc==1:
         carousel.main(args.s)
 elif args.command=="pdf":
-    pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
+    if args.o:
+        o=args.o
+        pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
+    else:
+        title=download()
+        for i in title:
+            o=f'{args.s}\{i}.mp4'
+            slide_extractor.main(o,args.s,args.ti)
+            path={args.s+'/photo'}
+            pdf_ppt.convert_to_pdf(path,args.s,args.n)
 elif args.command=="ppt":
-    pdf_ppt.convert_to_ppt(args.o, args.s, args.res, args.start, args.count, args.quiet)
+    if args.o:
+        o=args.o
+        pdf_ppt.convert_to_ppt(args.o, args.s, args.res, args.start, args.count, args.quiet)
+    else:
+        title=download()
+        for i in title:
+            o=f'{args.s}\{i}.mp4'
+            slide_extractor.main(o,args.s,2)
+            pdf_ppt.convert_to_ppt(args.s, args.s, args.res, args.start, args.count, args.quiet)
 elif args.command=="car":
-    pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
+    if args.o:
+        o=args.o
+        pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
+    else:
+        title=download()
+        for i in title:
+            o=f'{args.s}\{i}.mp4'
+            slide_extractor.main(o,args.s,2)
+            d=carousel.main(args.s)
+            pdf_ppt.carousel_to_pdf(d,args.s,args.s,args.n)
 
 
 # test/links1.txt

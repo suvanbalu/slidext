@@ -4,3 +4,6 @@
 /jupyter_notebooks
 *.mp4
 SAD- SPD.docx.pdf
+__pycache__
+*.pyc
+Carousel/__pycache__

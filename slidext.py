@@ -51,6 +51,7 @@ group4.add_argument('-o','-open',help="Path of Video")
 group4.add_argument('-f','-file',help="File of Links")
 group4.add_argument('-l','-link',action='append',help="Link(s) to Video")
 #
+pcppt_parser.add_argument('-n','-name',default="temp",help="Name of New File")
 pcppt_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
 pcppt_parser.add_argument('-res',default=300,help="Set threshold")
 pcppt_parser.add_argument('-start',default=0,help="Starting page of PPT")
@@ -107,7 +108,7 @@ elif args.command=="pdf":
 elif args.command=="ppt":
     if args.o:
         o=args.o
-        pdf_ppt.convert_to_ppt(args.o, args.s, args.res, args.start, args.count, args.quiet)
+        pdf_ppt.convert_to_ppt(args.o, args.s, args.n,args.res, args.start, args.count, args.quiet)
     else:
         title=download()
         for i in title:

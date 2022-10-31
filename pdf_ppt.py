@@ -11,7 +11,11 @@ from pathlib import Path
 
 def convert_to_pdf(path,dest,name):
     final=[]
-    images = sorted(os.listdir(path))
+    files = sorted(os.listdir(path))
+    images=[]
+    for i in files:
+        if i.endswith(".png"):
+            images.append(i)
     for i in images[1:]:
         img = Image.open(f"{path}/{i}")
         imgc = img.convert('RGB')
@@ -20,7 +24,7 @@ def convert_to_pdf(path,dest,name):
     imgc0=img0.convert("RGB")
     imgc0.save(f"{dest}/{name}.pdf",save_all=True,append_images=final)
 
-def convert_to_ppt(input_path, output_file, resolution=300, start_page=0, page_count=None,quiet=True):
+def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, page_count=None,quiet=True):
     convert_to_pdf(input_path,os.getcwd(),"temp")
     pdf_file = "temp.pdf"
     doc = fitz.open("temp.pdf")
@@ -47,6 +51,7 @@ def convert_to_ppt(input_path, output_file, resolution=300, start_page=0, page_c
     if not quiet:
         page_iter = trange(start_page, start_page + page_count)
     else:
+        print(start_page,  page_count)
         page_iter = range(start_page, start_page + page_count)
 
     # iterate over slides
@@ -64,9 +69,14 @@ def convert_to_ppt(input_path, output_file, resolution=300, start_page=0, page_c
         slide.shapes.add_picture(image_file, left, top, height=prs.slide_height)
 
     if output_file is None:
-        output_file = Path(pdf_file).with_suffix('.pptx')
-    
+        if name is None:
+            output_file = Path(pdf_file).with_suffix('.pptx')
+        else:
+            output_file = Path(pdf_file).with_suffix(f'{name}.pptx')
+    else:
+        output_file = output_file+"\\"+name+".pptx"
     # save presentation
+    print(output_file)
     prs.save(output_file)
     doc.close()
     os.remove(os.getcwd()+"\\temp.pdf")

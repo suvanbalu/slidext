@@ -70,7 +70,7 @@ pc_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New
 pc_parser.add_argument('-n','-name',help="Name of file")
 
 args=parser.parse_args()
-print(args.l)
+# print(args.l)
 
 def download():
     # print(args.l)
@@ -79,54 +79,57 @@ def download():
     else:
         title=videodownload.videodownload(args.s,filename=args.f,file=True)
     return title
+try:
+    if args.command=="vd":
+        t=download()
+        print(t)
 
-if args.command=="vd":
-    title=download()
-    print(title)
-elif args.command=="se":
-    if args.o:
-        o=args.o
-        slide_extractor.main(o,args.s,args.ti)
-    else:
-        title=download()
-        for i in title:
-            o=f'{args.s}\{i}.mp4'
+    elif args.command=="se":
+        if args.o:
+            o=args.o
             slide_extractor.main(o,args.s,args.ti)
-    if args.nc==1:
-        carousel.main(args.s)
-elif args.command=="pdf":
-    if args.o:
-        o=args.o
-        pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
-    else:
-        title=download()
-        for i in title:
-            o=f'{args.s}\{i}.mp4'
-            slide_extractor.main(o,args.s,args.ti)
-            path={args.s+'/photo'}
-            pdf_ppt.convert_to_pdf(path,args.s,args.n)
-elif args.command=="ppt":
-    if args.o:
-        o=args.o
-        pdf_ppt.convert_to_ppt(args.o, args.s, args.n,args.res, args.start, args.count, args.quiet)
-    else:
-        title=download()
-        for i in title:
-            o=f'{args.s}\{i}.mp4'
-            slide_extractor.main(o,args.s,2)
-            pdf_ppt.convert_to_ppt(args.s, args.s, args.res, args.start, args.count, args.quiet)
-elif args.command=="car":
-    if args.o:
-        o=args.o
-        pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
-    else:
-        title=download()
-        for i in title:
-            o=f'{args.s}\{i}.mp4'
-            slide_extractor.main(o,args.s,2)
-            d=carousel.main(args.s)
-            pdf_ppt.carousel_to_pdf(d,args.s,args.s,args.n)
+        else:
+            title=download()
+            for i in title:
+                o=f'{args.s}\{i}.mp4'
+                slide_extractor.main(o,args.s,args.ti)
+        if args.nc==1:
+            array=carousel.main(args.s)
+    
+    elif args.command=="pdf":
+        if args.o:
+            o=args.o
+            pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
+        else:
+            title=download()
+            for i in title:
+                o=f'{args.s}\{i}.mp4'
+                slide_extractor.main(o,args.s,args.ti)
+                path={args.s+'/photo'}
+                pdf_ppt.convert_to_pdf(path,args.s,args.n)
+    elif args.command=="ppt":
+        if args.o:
+            o=args.o
+            pdf_ppt.convert_to_ppt(args.o, args.s, args.n,args.res, args.start, args.count, args.quiet)
+        else:
+            title=download()
+            for i in title:
+                o=f'{args.s}\{i}.mp4'
+                slide_extractor.main(o,args.s,2)
+                pdf_ppt.convert_to_ppt(args.s, args.s, args.res, args.start, args.count, args.quiet)
+    elif args.command=="car":
+        if args.o:
+            o=args.o
+            pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
+        else:
+            title=download()
+            for i in title:
+                o=f'{args.s}\{i}.mp4'
+                slide_extractor.main(o,args.s,2)
+                d=carousel.main(args.s)
+                pdf_ppt.carousel_to_pdf(d,args.s,args.s,args.n)
 
-
+except Exception as e:
+    print("Error/Invalid Commands")
 # test/links1.txt
 # C:\Users\nvnas\OneDrive\Desktop\slidext\2 Second Video.mp4

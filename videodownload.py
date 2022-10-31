@@ -7,6 +7,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def download_yvideo(dest,links):
+  titles=[]
   for i in range(len(links)):
       try:  
           yt = YouTube(links[i])  
@@ -15,15 +16,17 @@ def download_yvideo(dest,links):
           title=title[0]
       except:         
           #to handle exception  
-          print("Connection Error, Check your connectivity")  
+          print("Connection Error, Check your connectivity/Check video link") 
+          break 
       d_video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
       try:  
           # downloading the video  
           d_video.download(dest,filename=title+".mp4")  
+          titles.append(title)
       except:  
           print(f"There is some Error for video no. {i+1}!")  
       print(f'Video {i+1} Download Successfully!') 
-  return title
+  return titles
 
 def download_ovideo(dest,links):
   for i in range(len(links)):
@@ -59,9 +62,8 @@ def videodownload(dest,links=None,file=False,filename=None):
     ylinks,olinks=checkyoutube(links)
   except:
     print("No links found!")
-  title=[]
   if len(ylinks)>0:
-    title.append(download_yvideo(dest,ylinks))
+    title=(download_yvideo(dest,ylinks))
   if len(olinks)>0:
     try:
       download_ovideo(dest,olinks)

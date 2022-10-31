@@ -22,6 +22,7 @@ def convert_to_pdf(path,dest,name):
         final.append(imgc)
     img0=Image.open(f"{path}/{images[0]}")
     imgc0=img0.convert("RGB")
+    print("File saved at : ",dest)
     imgc0.save(f"{dest}/{name}.pdf",save_all=True,append_images=final)
 
 def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, page_count=None,quiet=True):
@@ -51,7 +52,7 @@ def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, p
     if not quiet:
         page_iter = trange(start_page, start_page + page_count)
     else:
-        print(start_page,  page_count)
+        # print(start_page,  page_count)
         page_iter = range(start_page, start_page + page_count)
 
     # iterate over slides
@@ -76,7 +77,7 @@ def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, p
     else:
         output_file = output_file+"\\"+name+".pptx"
     # save presentation
-    print(output_file)
+    print("File saved at : ",output_file)
     prs.save(output_file)
     doc.close()
     os.remove(os.getcwd()+"\\temp.pdf")

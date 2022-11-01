@@ -28,7 +28,7 @@ class App(Tk.Tk):
         geometry = str(width) + 'x' + str(height)
         self.geometry(geometry)
         self.title(title)
-        self.resizable(0,0)
+        # self.resizable(0,0)
         self.nok=Tk.IntVar()
         self.np=Tk.StringVar()
         self.config(bg='#282C34')
@@ -193,4 +193,4 @@ def main(path):
     return d
 
 # path=input()
-# main(path)
+# print(main(r"E:\Projects\slidext\test_photos\test6"))

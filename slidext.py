@@ -36,24 +36,26 @@ se_parser.add_argument('-pt',default=0,help="print thresholds") #work to be done
 pcpdf_parser=subparser.add_parser('pdf',help='PDF Converter')
 # 
 group3 = pcpdf_parser.add_mutually_exclusive_group(required=True)
+group3.add_argument('-fo','-folder',help="Path of Folder")
 group3.add_argument('-o','-open',help="Path of Video")
 group3.add_argument('-f','-file',help="File of Links")
 group3.add_argument('-l','-link',action='append',help="Link(s) to Video")
 # 
 pcpdf_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
-pcpdf_parser.add_argument('-n','-name',help="Name of file")
+pcpdf_parser.add_argument('-n','-name',default="temp.pdf",help="Name of file")
 
 
 pcppt_parser=subparser.add_parser('ppt',help='PPT Converter')
 # 
 group4 = pcppt_parser.add_mutually_exclusive_group(required=True)
+group4.add_argument('-fo','-folder',help="Path of Folder")
 group4.add_argument('-o','-open',help="Path of Video")
 group4.add_argument('-f','-file',help="File of Links")
 group4.add_argument('-l','-link',action='append',help="Link(s) to Video")
 #
 pcppt_parser.add_argument('-n','-name',default="temp",help="Name of New File")
 pcppt_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New File")
-pcppt_parser.add_argument('-res',default=300,help="Set threshold")
+pcppt_parser.add_argument('-res',default=300,help="Set resolution")
 pcppt_parser.add_argument('-start',default=0,help="Starting page of PPT")
 pcppt_parser.add_argument('-count',default=None,help="Page Count")
 pcppt_parser.add_argument('-quiet',default=True,help="!!!!")
@@ -93,43 +95,42 @@ try:
             for i in title:
                 o=f'{args.s}\{i}.mp4'
                 slide_extractor.main(o,args.s,args.ti)
-        if args.nc==1:
-            array=carousel.main(args.s)
+                if args.nc==1:
+                    array=carousel.main(args.s)
+                    print(array)
+                    pdf_ppt.carousel_to_pdf(array,args.s,args.s,i)
     
     elif args.command=="pdf":
+        if args.fo:
+            pdf_ppt.convert_to_pdf(args.fo,args.s,args.n)
         if args.o:
             o=args.o
-            pdf_ppt.convert_to_pdf(args.o,args.s,args.n)
+            slide_extractor.main(o,args.s,2)
+            pdf_ppt.convert_to_pdf(args.s,args.s,args.n)
         else:
             title=download()
             for i in title:
                 o=f'{args.s}\{i}.mp4'
-                slide_extractor.main(o,args.s,args.ti)
-                path={args.s+'/photo'}
+                slide_extractor.main(o,args.s,2)
+                path=args.s
                 pdf_ppt.convert_to_pdf(path,args.s,args.n)
+                
     elif args.command=="ppt":
-        if args.o:
+        if args.fo:
+            pdf_ppt.convert_to_ppt(args.fo, args.s, args.n,args.res, args.start, args.count, args.quiet)
+        elif args.o:
             o=args.o
-            pdf_ppt.convert_to_ppt(args.o, args.s, args.n,args.res, args.start, args.count, args.quiet)
+            slide_extractor.main(o,args.s,2)
+            pdf_ppt.convert_to_ppt(args.s, args.s, args.n, args.res, args.start, args.count, args.quiet)
         else:
             title=download()
             for i in title:
                 o=f'{args.s}\{i}.mp4'
                 slide_extractor.main(o,args.s,2)
-                pdf_ppt.convert_to_ppt(args.s, args.s, args.res, args.start, args.count, args.quiet)
-    elif args.command=="car":
-        if args.o:
-            o=args.o
-            pdf_ppt.carousel_to_pdf(args.p,args.o,args.s,args.n)
-        else:
-            title=download()
-            for i in title:
-                o=f'{args.s}\{i}.mp4'
-                slide_extractor.main(o,args.s,2)
-                d=carousel.main(args.s)
-                pdf_ppt.carousel_to_pdf(d,args.s,args.s,args.n)
+                pdf_ppt.convert_to_ppt(args.s, args.s, args.n, args.res, args.start, args.count, args.quiet)
 
 except Exception as e:
+    print(e)
     print("Error/Invalid Commands")
 # test/links1.txt
 # C:\Users\nvnas\OneDrive\Desktop\slidext\2 Second Video.mp4

@@ -30,6 +30,7 @@ se_parser.add_argument('-s','-save',default=os.getcwd(),help="Destination of New
 se_parser.add_argument('-t',default=520000,help="Set threshold")
 se_parser.add_argument('-ti',default=2,help="Time interval of frames in second")
 se_parser.add_argument('-nc',default=1,help="No Carousel")
+se_parser.add_argument('-n',default="temp01",help="Name of pdf from carousel")
 se_parser.add_argument('-pt',default=0,help="print thresholds") #work to be done
 
 
@@ -90,6 +91,11 @@ try:
         if args.o:
             o=args.o
             slide_extractor.main(o,args.s,args.ti)
+            if args.nc==1:
+                array=carousel.main(args.s)
+                print(array)
+                pdf_ppt.carousel_to_pdf(array,args.s,args.s,args.n)
+
         else:
             title=download()
             for i in title:

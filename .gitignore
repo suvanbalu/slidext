@@ -6,4 +6,6 @@
 SAD- SPD.docx.pdf
 __pycache__
 *.pyc
+*.png
+*.pdf
 Carousel/__pycache__

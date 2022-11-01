@@ -87,11 +87,12 @@ def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, p
 
 def carousel_to_pdf(pages,path,dest,name):
     final=[]
+    pages=list(set(pages))
     images = sorted(os.listdir(path))
     images= [i for i in images if i.endswith(".png")]
     ind=1
     for i in images[1:]:
-        if ind+1 in pages[1:]:
+        if ind+1 in pages:
             img = Image.open(f"{path}/{i}")
             imgc = img.convert('RGB')
             final.append(imgc)

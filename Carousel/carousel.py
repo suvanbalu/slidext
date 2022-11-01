@@ -4,6 +4,7 @@ from tkinter import Canvas, image_names, ttk
 from typing import Text
 from PIL import Image, ImageTk
 import glob
+import os
 
 height = 750
 width = 1000 
@@ -16,8 +17,11 @@ def open_images(path):
 
 d=[]
 def printer():
+    global app
     print(list(set(d)))
-
+    app.destroy()
+    
+    
 def show(event):
     print(event.x,event.y)
 
@@ -45,7 +49,7 @@ class App(Tk.Tk):
         self.page1 =Tk.Label(text=" ")
 
         self.page.config(font=("Ubuntu",17),bg="#262930",fg="#D9D9D9",borderwidth=10,highlightthickness=10)
-        self.check.config(font=("Ubuntu",20),bg="#282C34",fg="White")
+        self.check.config()
         self.submit.config(font=("Ubuntu",15),bg="#282C34",fg="Black",borderwidth=0,highlightthickness=0)
         self.submit.config(height=47,width=164)
         self.page1.config(font=("Ubuntu",1),bg="#282C34",fg="White",highlightthickness=0)
@@ -190,7 +194,6 @@ def main(path):
     car = Carousel(app)
     car.pack()
     app.mainloop()
-    return d
-
+    return(list(set(d)))
 # path=input()
 # print(main(r"E:\Projects\slidext\test_photos\test6"))

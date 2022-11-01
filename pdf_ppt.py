@@ -22,7 +22,7 @@ def convert_to_pdf(path,dest,name):
         final.append(imgc)
     img0=Image.open(f"{path}/{images[0]}")
     imgc0=img0.convert("RGB")
-    print(f"File saved at : {dest}/{name}.pdf")
+    print(f"File saved at : {dest}\{name}.pdf")
     imgc0.save(f"{dest}/{name}.pdf",save_all=True,append_images=final)
 
 def convert_to_ppt(input_path, output_file, name,resolution=300, start_page=0, page_count=None,quiet=True):
@@ -97,7 +97,7 @@ def carousel_to_pdf(pages,path,dest,name):
             imgc = img.convert('RGB')
             final.append(imgc)
         ind+=1
-    img0=Image.open(f"{path}/{images[pages[0]]}")
+    img0=Image.open(f"{path}/{images[0]}")
     imgc0=img0.convert("RGB")
     imgc0.save(f"{dest}/{name}.pdf",save_all=True,append_images=final)
 

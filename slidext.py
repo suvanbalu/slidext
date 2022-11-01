@@ -93,7 +93,7 @@ try:
             slide_extractor.main(o,args.s,args.ti)
             if args.nc==1:
                 array=carousel.main(args.s)
-                print(array)
+                # print(array)
                 pdf_ppt.carousel_to_pdf(array,args.s,args.s,args.n)
 
         else:

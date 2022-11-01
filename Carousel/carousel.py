@@ -18,7 +18,7 @@ def open_images(path):
 d=[]
 def printer():
     global app
-    print(list(set(d)))
+    # print(list(set(d)))
     app.destroy()
     
     
@@ -151,7 +151,7 @@ def moveImageRight(event):
 
     
     if car.current == len(images):
-        print(list(set(d)))
+        # print(list(set(d)))
         pass
     else:
         car.moveImageRight()
@@ -194,6 +194,8 @@ def main(path):
     car = Carousel(app)
     car.pack()
     app.mainloop()
+    e=[]
+    
     return(list(set(d)))
 # path=input()
 # print(main(r"E:\Projects\slidext\test_photos\test6"))

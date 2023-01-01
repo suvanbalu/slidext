@@ -90,7 +90,7 @@ python slidext.py car <Arguments>
 
 
 ## Team Members
-| Name | Email | Social Media |
+| Name | Email | Social |
 | --- | --- | --- |
 | Suvan Sathyendira B | suvanbalu@gmail.com | [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/suvanbalu) [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/suvanbalu/)
 | Ashwin V | ashwinvelu2003@gmail.com | [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/asxwin) [![](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ashwin-v-108068219/)

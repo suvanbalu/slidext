@@ -17,17 +17,8 @@ python slidext.py <Sub Modules> <Arguments>
 ```
 
 ## Arguments
-1. **Sub Module** - Video Downloader
-```bash
-python slidext.py vd <Arguments>
-```
-| Argument | Description | Default |
-| --- | --- | --- |
-| -l,--link | Link of the video | None |
-| -s,--save | Path of Output Directory | Current Directory |
-  
-  
-2. **Sub Module** - Slide Extractor
+
+1. **Sub Module** - Slide Extractor
 ```bash
 python slidext.py se <Arguments>
 ```
@@ -42,7 +33,16 @@ python slidext.py se <Arguments>
 | -nc | No Carousel | 1 |
 | -pt | Print Thresholds | 0 | 
 
-
+2. **Sub Module** - Video Downloader
+```bash
+python slidext.py vd <Arguments>
+```
+| Argument | Description | Default |
+| --- | --- | --- |
+| -l,--link | Link of the video | None |
+| -s,--save | Path of Output Directory | Current Directory |
+  
+  
 3. **Sub Module** - PDF converter
 ```bash
 python slidext.py pdf <Arguments>
